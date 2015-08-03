@@ -48,21 +48,49 @@
 </template>
 
 <template name="input">
-    <input type="text" id="msg" placeholder="Your message goes here..." style="width: 50%; margin-bottom: 0px">
-    <input type="button" value="Send message" class="btn btn-primary sendMsg">
+    <div>
+        <input type="text" id="msg" placeholder="Your message goes here..." style="width: 80%; margin-bottom: 0px">
+        <input type="button" value="Send message" class="btn btn-primary sendMsg">
+    </div>
+    <span class="messageHelp">You can start you message with <span class="code">{img=http://yourimagedomain.com/image.jpg}</span> and your image will be added in the message body</span>
 </template>
 
 <template name="messages">
     <h4>Room: {{roomname}}</h4>
-    <div id="messages" style="background-color: #ffffff; border: 1px solid darkgray; max-height: 200px; overflow: auto">
-        {{#each messages}}
-            {{> message}}
-        {{/each}}
+    <div id="messages">
+        {{#if messages.count}}
+            {{#each messages}}
+                {{> message}}
+            {{/each}}
+        {{else}}
+            <h4> Be the first to write a message in this room</h4>
+        {{/if}}
     </div>
 </template>
 
 <template name="message">
-    <p><strong>{{user}}</strong> <span style="font-size: 0.7em; color: darkgray">({{timestamp}})</span>: <i>{{msg}}</i></p>
+    <div class="message">
+        <div>
+            <span class="user">{{user}}</span>
+            <span class="msg">{{msg}}</span>
+        </div>
+        {{#if img}}
+        <img src={{img}} />
+        {{/if}}
+        <div class="ts"> 
+            {{prettydate ts live=true}} ·
+            <span class="like">
+                {{#if likeAction}}
+                  Like
+                {{else}}
+                  Unlike
+                {{/if}}
+            </span>            
+            {{#if nLikes}}
+               · {{nLikes}} Likes 
+            {{/if}}
+        </div>
+    </div>
 </template>
 
 <template name="rooms">

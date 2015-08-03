@@ -2,3 +2,56 @@
 body {
     padding: 60px;
 }
+.user{
+    color: #3b5998;
+}
+
+.messageHelp{
+    font-size: 10px;
+    line-height: 12px; 
+    color: #9197a3;   
+}
+.messageHelp .code{
+    font-family: "Courier New", monospace;
+}
+
+#messages {
+    background-color: #ffffff; 
+    border: 1px solid darkgray; 
+    max-height: 600px; 
+    overflow: auto;
+    padding: 5px;
+}
+#messages * {
+    box-sizing: border-box;
+}
+.message {
+    font-size: 12px;
+    line-height: 12px;
+}
+.message img{
+    width: 100%;
+    padding: 10px;
+}
+.ts {
+    font-size: 10px;
+    line-height: 12px; 
+    color: #9197a3;   
+    border-bottom: #ddd solid 1px;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}
+.message:last-child .ts {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.like {
+    cursor: pointer;
+    color: #3b5998;
+}
+
+.like:hover {
+    text-decoration: underline;
+}
