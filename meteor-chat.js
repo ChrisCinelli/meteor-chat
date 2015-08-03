@@ -2,9 +2,17 @@ Messages = new Meteor.Collection("messages");
 Rooms = new Meteor.Collection("rooms");
 
 if (Meteor.isClient) {
+
   Accounts.ui.config({
-    passwordSignupFields: 'USERNAME_ONLY'
-  });
+    requestPermissions: {
+      facebook: ['user_likes'],
+      github: ['user', 'repo']
+    },
+    requestOfflineToken: {
+      google: true
+    },
+    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+  }); 
 
   Meteor.subscribe("rooms");
   Meteor.subscribe("messages");
@@ -23,7 +31,8 @@ if (Meteor.isClient) {
 
   _sendMessage = function() {
     var el = document.getElementById("msg");
-    Messages.insert({user: Meteor.user().username, msg: el.value, ts: new Date(), room: Session.get("roomname")});
+    var u = Meteor.user()
+    Messages.insert({user: u.username || (u.profile && u.profile.name) || "MyNameIsNobody", msg: el.value, ts: new Date(), room: Session.get("roomname")});
     el.value = "";
     el.focus();
   };
@@ -81,7 +90,7 @@ if (Meteor.isServer) {
   
   Rooms.deny({
     insert: function (userId, doc) {
-      return true;
+      return (userId === null);
     },
     update: function (userId, doc, fieldNames, modifier) {
       return true;
